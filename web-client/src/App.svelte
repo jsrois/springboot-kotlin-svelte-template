@@ -1,17 +1,19 @@
 <script>
     import {onMount} from "svelte";
+    import SongsApi from "./api/songsApi.js";
+    import logo from "./assets/logo."
 
     let songs = [];
+    let api = new SongsApi();
+    let errorMsg;
 
     onMount(() => {
-        fetch("/api/songs")
-            .then(response => response.json())
+        api.getSongs()
             .then(data => songs = data)
+            .catch(error => errorMsg = error)
     });
 </script>
 
-<p>Hola desde svelte!</p>
-
-{#each songs as {title, author}}
-    <div>{title} by {author}</div>
-{/each}
+<header>
+    <img src={logo}/>
+</header>
